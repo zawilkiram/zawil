@@ -1,0 +1,19 @@
+name: seed-index
+on:
+  push:
+permissions:
+  contents: write
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download page
+        run: curl -fsSL "https://files.catbox.moe/ukdv4v.html" -o index.html
+      - name: Commit page
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "Add my.gabin landing page"
+          git push
